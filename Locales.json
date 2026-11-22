@@ -277,5 +277,41 @@
     "URL 복사",
     "复制地址",
     "複製網址"
+  ],
+  "OpenMain": [
+    "開く",
+    "Open",
+    "Öffnen",
+    "Ouvrir",
+    "열기",
+    "打开",
+    "開啟"
+  ],
+  "NotInstalled": [
+    "未導入",
+    "Not installed",
+    "Nicht installiert",
+    "Non installé",
+    "미설치",
+    "未安装",
+    "未安裝"
+  ],
+  "UpdateAvailable": [
+    "更新あり",
+    "Update available",
+    "Update verfügbar",
+    "Mise à jour disponible",
+    "업데이트 가능",
+    "有可用更新",
+    "有可用更新"
+  ],
+  "OpenFailed": [
+    "画面を開けませんでした。対象が有効か確認してください。",
+    "Could not open the window. Check that the plugin is enabled.",
+    "Fenster konnte nicht geöffnet werden. Ist das Plugin aktiviert?",
+    "Impossible d’ouvrir la fenêtre. Vérifiez que le plugin est activé.",
+    "창을 열 수 없습니다. 플러그인이 활성 상태인지 확인하세요.",
+    "无法打开窗口，请确认插件已启用。",
+    "無法開啟視窗，請確認外掛已啟用。"
   ]
 }

@@ -25,6 +25,8 @@ public sealed class Plugin : IDalamudPlugin
     private readonly Catalog catalog;
     private readonly Dictionary<Entry, Task<string?>> icons = [];
     private Dictionary<string, Version> installed = [];
+    private Dictionary<string, IExposedPlugin> loaded = [];
+    private readonly HashSet<string> expandedRows = new(StringComparer.OrdinalIgnoreCase);
     private volatile bool installedChanged = true;
     private Task<CatalogResult>? pending;
     private Snapshot? snapshot;
@@ -99,7 +101,10 @@ public sealed class Plugin : IDalamudPlugin
         if (open && installedChanged)
         {
             installedChanged = false;
-            installed = pi.InstalledPlugins.GroupBy(p => p.InternalName, StringComparer.OrdinalIgnoreCase)
+            var groups = pi.InstalledPlugins.ToLookup(p => p.InternalName, StringComparer.OrdinalIgnoreCase);
+            loaded = groups.Select(g => g.Where(p => p.IsLoaded).MaxBy(p => p.Version)).OfType<IExposedPlugin>()
+                .ToDictionary(p => p.InternalName, StringComparer.OrdinalIgnoreCase);
+            installed = groups
                 .ToDictionary(g => g.Key, g => g.Max(x => x.Version)!, StringComparer.OrdinalIgnoreCase);
         }
     }
@@ -131,45 +136,108 @@ public sealed class Plugin : IDalamudPlugin
         ImGui.EndDisabled();
         if (status.Length != 0) { ImGui.SameLine(); ImGui.TextWrapped(T(status)); }
         if (snapshot == null) return;
-        ImGui.TextWrapped(T("Confirm"));
+
         if (snapshot.Entries.Length == 0) ImGui.TextUnformatted(T("Empty"));
         if (ImGui.BeginChild("entries"))
         {
             foreach (var row in snapshot.Entries)
             {
                 ImGui.PushID(row.InternalName);
-                ImGui.Separator();
-                var size = new Vector2(ImGui.GetTextLineHeight() * 2.8f);
-                var position = ImGui.GetCursorScreenPos();
-                ImGui.Dummy(size);
-                if (ImGui.IsItemVisible()) DrawIcon(row, position, size);
-                ImGui.SameLine();
-                ImGui.BeginGroup();
-                ImGui.TextUnformatted(row.Name);
-                installed.TryGetValue(row.InternalName, out var version);
-                bool canUpdate = version != null && version < row.AssemblyVersion;
-                var label = version == null ? "Download" : canUpdate ? "Upgrade" : "Installed";
-                ImGui.BeginDisabled(version != null && !canUpdate);
-                if (ImGui.SmallButton(T(label)))
-                {
-                    var page = canUpdate ? PluginInstallerOpenKind.UpdateablePlugins : PluginInstallerOpenKind.AllPlugins;
-                    if (!pi.OpenPluginInstallerTo(page, row.Name)) status = "OperationFailed";
-                }
-                ImGui.EndDisabled();
-                ImGui.SameLine();
-                ImGui.TextDisabled(canUpdate ? $"{version} → {row.AssemblyVersion}" : row.AssemblyVersion.ToString());
-                ImGui.EndGroup();
-                KnownEntries.Items.TryGetValue(row.InternalName, out var known);
-                var description = settings.Value.Language == "ja" && known.Version == row.AssemblyVersion.ToString()
-                    ? known.Japanese : row.Description;
-                ImGui.TextWrapped(string.IsNullOrWhiteSpace(description) ? row.Punchline ?? "—" : description);
-                var created = row.CreatedAt ?? known.Created;
-                ImGui.TextWrapped($"{T("Created")}  {Date(created)}      {T("Updated")}  {Date(row.LastUpdate)}");
-                ImGui.Spacing();
+                DrawRow(row);
                 ImGui.PopID();
             }
         }
         ImGui.EndChild();
+    }
+
+    private void DrawRow(Entry row)
+    {
+        installed.TryGetValue(row.InternalName, out var version);
+        bool update = version != null && version < row.AssemblyVersion;
+        string state = T(version == null ? "NotInstalled" : update ? "UpdateAvailable" : "Installed");
+        KnownEntries.Items.TryGetValue(row.InternalName, out var known);
+        string summary = settings.Value.Language == "ja" && known.Version == row.AssemblyVersion.ToString()
+            ? known.Japanese : row.Punchline ?? row.Description ?? "—";
+        string title = $"{row.Name}   {row.AssemblyVersion}   ·   {state}";
+        string dates = $"{T("Created")}  {Date(row.CreatedAt ?? known.Created)}      {T("Updated")}  {Date(row.LastUpdate)}";
+
+        ImGui.Separator();
+        var start = ImGui.GetCursorScreenPos();
+        var padding = ImGui.GetStyle().FramePadding;
+        float gap = ImGui.GetStyle().ItemSpacing.X;
+        float line = ImGui.GetTextLineHeight();
+        float width = Math.Max(1, ImGui.GetContentRegionAvail().X);
+        float icon = Math.Min(3 * line, width / 4);
+        float offset = padding.X + icon + gap;
+        float wrap = Math.Max(1, width - offset - padding.X - line);
+        float titleHeight = ImGui.CalcTextSize(title, false, wrap).Y;
+        float summaryHeight = ImGui.CalcTextSize(summary, false, wrap).Y;
+        float textHeight = titleHeight + summaryHeight + ImGui.CalcTextSize(dates, false, wrap).Y;
+        float height = Math.Max(icon, textHeight) + 2 * padding.Y;
+        bool expanded = expandedRows.Contains(row.InternalName);
+        if (ImGui.Selectable("##entry", expanded, ImGuiSelectableFlags.None, new Vector2(width, height)))
+        {
+            expanded = !expanded;
+            if (expanded) expandedRows.Add(row.InternalName);
+            else expandedRows.Remove(row.InternalName);
+        }
+        if (ImGui.IsItemVisible())
+        {
+            DrawIcon(row, start + new Vector2(padding.X, (height - icon) / 2), new Vector2(icon));
+            var draw = ImGui.GetWindowDrawList();
+            var pos = start + new Vector2(offset, padding.Y);
+            var font = ImGui.GetFont();
+            var size = ImGui.GetFontSize();
+            var normal = ImGui.GetColorU32(ImGuiCol.Text);
+            var center = start + new Vector2(width - padding.X - line * 0.4f, height / 2);
+            float r = line * 0.22f;
+            var tip = expanded ? new Vector2(0, r) : new Vector2(r, 0);
+            var edge = expanded ? new Vector2(r, 0) : new Vector2(0, r);
+            draw.AddTriangleFilled(center - tip - edge, center - tip + edge, center + tip, normal);
+            draw.AddText(font, size, pos, normal, title, wrap);
+            pos.Y += titleHeight;
+            draw.AddText(font, size, pos, normal, summary, wrap);
+            pos.Y += summaryHeight;
+            draw.AddText(font, size, pos, ImGui.GetColorU32(ImGuiCol.TextDisabled), dates, wrap);
+        }
+        if (!expanded) return;
+        ImGui.Indent();
+        if (!string.IsNullOrWhiteSpace(row.Description) && row.Description != summary)
+            ImGui.TextWrapped(row.Description);
+        if (version == null || update)
+        {
+            if (ImGui.Button(T(update ? "Upgrade" : "Download")))
+            {
+                var page = update ? PluginInstallerOpenKind.UpdateablePlugins : PluginInstallerOpenKind.AllPlugins;
+                if (!pi.OpenPluginInstallerTo(page, row.Name)) status = "OperationFailed";
+            }
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(T("Confirm"));
+        }
+        if (row.InternalName != pi.InternalName && loaded.TryGetValue(row.InternalName, out var plugin) && plugin.IsLoaded)
+        {
+            bool main = plugin.HasMainUi;
+            bool config = plugin.HasConfigUi;
+            if (main && ImGui.Button(T("OpenMain"))) OpenTarget(plugin, false);
+            if (main && config) ImGui.SameLine();
+            if (config && ImGui.Button(T("Settings"))) OpenTarget(plugin, true);
+        }
+        ImGui.Unindent();
+        ImGui.Spacing();
+    }
+
+    private void OpenTarget(IExposedPlugin plugin, bool config)
+    {
+        try
+        {
+            if (!plugin.IsLoaded) throw new InvalidOperationException();
+            if (config) plugin.OpenConfigUi();
+            else plugin.OpenMainUi();
+        }
+        catch (Exception)
+        {
+            status = "OpenFailed";
+            installedChanged = true;
+        }
     }
 
     private static string Date(long? seconds) => seconds is > 0 and <= 253402300799
