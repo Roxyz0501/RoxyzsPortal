@@ -17,7 +17,8 @@ public sealed class Plugin : IDalamudPlugin
     private readonly IFramework framework;
     private readonly ITextureProvider textures;
     private readonly ConfigurationStore settings;
-    private readonly LocalizedFonts fonts;
+    private LocalizedFonts fonts;
+    private string catalogGlyphs = "";
     private readonly HttpClient http = new(new HttpClientHandler { AllowAutoRedirect = false })
         { Timeout = TimeSpan.FromSeconds(15), MaxResponseContentBufferSize = 1024 * 1024 };
     private readonly CancellationTokenSource stop = new();
@@ -89,6 +90,8 @@ public sealed class Plugin : IDalamudPlugin
             try
             {
                 var result = pending.GetAwaiter().GetResult();
+                if (!ReferenceEquals(result.Data.Entries, snapshot?.Entries))
+                    UpdateCatalogFonts(result.Data.Entries);
                 snapshot = result.Data;
                 status = result.Offline ? "Offline" : "";
                 var current = snapshot.Entries.ToHashSet();
@@ -107,6 +110,18 @@ public sealed class Plugin : IDalamudPlugin
             installed = groups
                 .ToDictionary(g => g.Key, g => g.Max(x => x.Version)!, StringComparer.OrdinalIgnoreCase);
         }
+    }
+
+    private void UpdateCatalogFonts(Entry[] entries)
+    {
+        var text = string.Concat(entries.Select(e => string.Concat(e.Name, e.Punchline, e.Description)));
+        var glyphs = new string(text.Distinct().Order().ToArray());
+        if (catalogGlyphs == glyphs) return;
+        var next = new LocalizedFonts(pi.UiBuilder.FontAtlas,
+            KnownEntries.Items.Values.Select(x => x.Japanese).Append(glyphs));
+        fonts.Dispose();
+        fonts = next;
+        catalogGlyphs = glyphs;
     }
 
     private void Draw()
@@ -198,7 +213,7 @@ public sealed class Plugin : IDalamudPlugin
             pos.Y += titleHeight;
             draw.AddText(font, size, pos, normal, summary, wrap);
             pos.Y += summaryHeight;
-            draw.AddText(font, size, pos, ImGui.GetColorU32(ImGuiCol.TextDisabled), dates, wrap);
+            draw.AddText(font, size, pos, expanded ? normal : ImGui.GetColorU32(ImGuiCol.TextDisabled), dates, wrap);
         }
         if (!expanded) return;
         ImGui.Indent();
