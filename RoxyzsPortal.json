@@ -1,0 +1,17 @@
+{
+  "Author": "Roxyz0501",
+  "Name": "RoxyzsPortal",
+  "InternalName": "RoxyzsPortal",
+  "AssemblyVersion": "1.0.0.0",
+  "DalamudApiLevel": 15,
+  "ApplicableVersion": "any",
+  "RepoUrl": "https://github.com/Roxyz0501/RoxyzsPortal",
+  "IconUrl": "https://raw.githubusercontent.com/Roxyz0501/RoxyzsPortal/main/images/icon.png",
+  "Punchline": "ロキシーの公開プラグインを一覧で確認し、導入・更新できます。",
+  "Description": "アイコン、説明、作成日、最終更新日、配布バージョンを一覧表示します。ダウンロード・更新は対象を選択したDalamudインストーラーで確定できます。 /roxyzsportal",
+  "Tags": [
+    "portal",
+    "catalog",
+    "plugins"
+  ]
+}

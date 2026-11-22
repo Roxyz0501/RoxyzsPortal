@@ -1,2 +1,17 @@
 # RoxyzsPortal
-Dalamud catalog for Roxyz0501 plugins
+
+Roxyz0501の公開プラグインを、アイコンと説明付きの一覧から探せるDalamudプラグインです。最終更新が新しい順に表示します。
+
+1. Dalamud設定の「実験的機能」にあるカスタムリポジトリに次のURLを登録します。
+
+   `https://raw.githubusercontent.com/Roxyz0501/DalamudPluginRepo/main/repo.json`
+
+2. プラグインインストーラーで **RoxyzsPortal** をインストールし、`/roxyzsportal` で開きます。
+3. 未導入の項目では「ダウンロード」、新しい版がある項目では「更新」を選び、開いたDalamud画面で対象を確認して確定します。
+
+作成日は個別のGitHubリポジトリを作成した日時、最終更新は共通一覧に記録された配布版の更新日時です。どちらもPCの現地時刻で表示します。未登録の日時は「—」です。通信に失敗した場合は最後に保存した一覧を表示します。「一覧を再取得」で再試行できます。
+
+日本語・English・Deutsch・Français・한국어・简体中文・繁體中文に対応しています。初回はゲーム言語、DalamudのUI言語、英語の順で決定し、「言語設定」で変更できます。配布元の説明は原文を基本とし、日本語では収録済みの対象バージョンに日本語要約を表示します。
+
+[開発を支援する（任意・Ko-fi）](https://ko-fi.com/roxyz0501)
+

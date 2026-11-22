@@ -1,0 +1,281 @@
+{
+  "ConfigUnsupported": [
+    "新しい形式の設定です。上書きを停止しました。",
+    "Newer settings format; writes disabled.",
+    "Neueres Einstellungsformat; Schreiben deaktiviert.",
+    "Format de paramètres plus récent ; écriture désactivée.",
+    "새 설정 형식입니다. 덮어쓰기를 중지했습니다.",
+    "设置格式较新，已停止写入。",
+    "設定格式較新，已停止寫入。"
+  ],
+  "ConfigRecovered": [
+    "設定を正常なバックアップから復元しました",
+    "Settings recovered from a valid backup",
+    "Einstellungen aus gültiger Sicherung wiederhergestellt",
+    "Paramètres restaurés depuis une sauvegarde valide",
+    "유효한 백업에서 설정 복구됨",
+    "已从有效备份恢复设置",
+    "已從有效備份還原設定"
+  ],
+  "ConfigDamaged": [
+    "設定を読み取れず初期値を使用しています",
+    "Settings unreadable; using defaults",
+    "Einstellungen unlesbar; Standardwerte werden verwendet",
+    "Paramètres illisibles ; valeurs par défaut utilisées",
+    "설정을 읽을 수 없어 기본값 사용 중",
+    "无法读取设置，正在使用默认值",
+    "無法讀取設定，正在使用預設值"
+  ],
+  "ConfigSaveFailed": [
+    "保存失敗・未保存の変更があります",
+    "Save failed; changes pending",
+    "Speichern fehlgeschlagen; Änderungen ausstehend",
+    "Échec d'enregistrement ; modifications en attente",
+    "저장 실패 · 미저장 변경 있음",
+    "保存失败，有待保存更改",
+    "儲存失敗，有待存變更"
+  ],
+  "ConfigSaveStopped": [
+    "保存失敗が3回続いたため自動保存を停止しました",
+    "Autosave stopped after three failures",
+    "Automatisches Speichern nach drei Fehlern gestoppt",
+    "Enregistrement automatique arrêté après trois échecs",
+    "3회 실패하여 자동 저장 중지됨",
+    "连续3次失败，已停止自动保存",
+    "連續3次失敗，已停止自動儲存"
+  ],
+  "Settings": [
+    "設定",
+    "Settings",
+    "Einstellungen",
+    "Paramètres",
+    "설정",
+    "设置",
+    "設定"
+  ],
+  "Plugins": [
+    "プラグイン",
+    "Plugins",
+    "Plugins",
+    "Plugins",
+    "플러그인",
+    "插件",
+    "外掛"
+  ],
+  "Language": [
+    "言語設定",
+    "Language settings",
+    "Spracheinstellungen",
+    "Langue",
+    "언어 설정",
+    "语言设置",
+    "語言設定"
+  ],
+  "Support": [
+    "支援",
+    "Support",
+    "Unterstützung",
+    "Soutien",
+    "후원",
+    "支持",
+    "支持"
+  ],
+  "SupportHeading": [
+    "開発を支援",
+    "Support development",
+    "Entwicklung unterstützen",
+    "Soutenir le développement",
+    "개발 후원",
+    "支持开发",
+    "支持開發"
+  ],
+  "SupportBody": [
+    "支援は任意です。全機能を支援なしで利用できます。",
+    "Support is optional. All features are available without donating.",
+    "Unterstützung ist freiwillig. Alle Funktionen sind ohne Spende verfügbar.",
+    "Le soutien est facultatif. Toutes les fonctions sont disponibles sans don.",
+    "후원은 선택 사항입니다. 후원 없이 모든 기능을 사용할 수 있습니다.",
+    "支持完全自愿，无需捐赠即可使用所有功能。",
+    "支持完全自願，無需捐贈即可使用所有功能。"
+  ],
+  "Recipient": [
+    "支援先: Roxyz0501",
+    "Recipient: Roxyz0501",
+    "Empfänger: Roxyz0501",
+    "Bénéficiaire : Roxyz0501",
+    "후원 대상: Roxyz0501",
+    "支持对象：Roxyz0501",
+    "支持對象：Roxyz0501"
+  ],
+  "SupportButton": [
+    "Ko-fiで支援",
+    "Support on Ko-fi",
+    "Auf Ko-fi unterstützen",
+    "Soutenir sur Ko-fi",
+    "Ko-fi에서 후원",
+    "在 Ko-fi 上支持",
+    "在 Ko-fi 上支持"
+  ],
+  "Retry": [
+    "保存を再試行",
+    "Retry saving",
+    "Speichern erneut versuchen",
+    "Réessayer l'enregistrement",
+    "저장 재시도",
+    "重试保存",
+    "重試儲存"
+  ],
+  "OperationFailed": [
+    "操作できません。対象の更新・無効化・設定変更を確認し、再精査してください。",
+    "Operation unavailable. Check target updates, load state or schema changes, then inspect again.",
+    "Aktion nicht verfügbar. Aktualisierungen, Ladestatus und Schema prüfen und erneut untersuchen.",
+    "Opération indisponible. Vérifiez les mises à jour, le chargement et le schéma, puis réexaminez.",
+    "작업할 수 없습니다. 대상 업데이트, 로드 상태 및 설정 변경을 확인하고 다시 검사하세요.",
+    "无法操作。请检查目标更新、加载状态或设置结构变化，然后重新检查。",
+    "無法操作。請檢查目標更新、載入狀態或設定結構變更，然後重新檢查。"
+  ],
+  "Unavailable": [
+    "DLLの場所を取得できません",
+    "DLL location unavailable",
+    "DLL-Pfad nicht verfügbar",
+    "Emplacement de DLL indisponible",
+    "DLL 위치를 찾을 수 없습니다",
+    "无法获取 DLL 位置",
+    "無法取得 DLL 位置"
+  ],
+  "Help": [
+    "公開プラグインの一覧を開く",
+    "Open the plugin catalog",
+    "Plugin-Katalog öffnen",
+    "Ouvrir le catalogue",
+    "플러그인 목록 열기",
+    "打开插件列表",
+    "開啟外掛列表"
+  ],
+  "Loading": [
+    "一覧を取得中…",
+    "Loading catalog…",
+    "Katalog wird geladen…",
+    "Chargement du catalogue…",
+    "목록 불러오는 중…",
+    "正在加载列表…",
+    "正在載入列表…"
+  ],
+  "Offline": [
+    "取得できなかったため、保存済みの一覧を表示しています。",
+    "Showing the saved catalog. Refresh to try again.",
+    "Gespeicherter Katalog. Zum erneuten Versuch aktualisieren.",
+    "Catalogue sauvegardé affiché. Actualisez pour réessayer.",
+    "저장된 목록입니다. 새로 고침으로 다시 시도하세요.",
+    "正在显示已保存的列表，请刷新重试。",
+    "正在顯示已儲存的列表，請重新整理以重試。"
+  ],
+  "FetchError": [
+    "一覧を取得できません。一覧を再取得してください。",
+    "Could not load the catalog. Try refreshing.",
+    "Katalog konnte nicht geladen werden. Bitte aktualisieren.",
+    "Impossible de charger le catalogue. Réessayez.",
+    "목록을 불러오지 못했습니다. 새로 고침하세요.",
+    "列表加载失败，请刷新。",
+    "列表載入失敗，請重新整理。"
+  ],
+  "Confirm": [
+    "導入・更新は、ボタンを押した後にDalamudの画面で確定してください。",
+    "Confirm installation or update in the Dalamud window that opens.",
+    "Installation oder Update im geöffneten Dalamud-Fenster bestätigen.",
+    "Confirmez l’installation ou la mise à jour dans la fenêtre Dalamud.",
+    "열리는 Dalamud 창에서 설치 또는 업데이트를 확인하세요.",
+    "请在打开的Dalamud窗口中确认安装或更新。",
+    "請在開啟的Dalamud視窗中確認安裝或更新。"
+  ],
+  "Created": [
+    "作成日",
+    "Created",
+    "Erstellt",
+    "Création",
+    "생성일",
+    "创建日期",
+    "建立日期"
+  ],
+  "Updated": [
+    "最終更新",
+    "Last updated",
+    "Letzte Aktualisierung",
+    "Dernière mise à jour",
+    "최종 업데이트",
+    "最后更新",
+    "最後更新"
+  ],
+  "Refresh": [
+    "一覧を再取得",
+    "Refresh catalog",
+    "Katalog aktualisieren",
+    "Actualiser le catalogue",
+    "목록 새로 고침",
+    "刷新列表",
+    "重新整理列表"
+  ],
+  "Download": [
+    "ダウンロード",
+    "Download",
+    "Herunterladen",
+    "Télécharger",
+    "다운로드",
+    "下载",
+    "下載"
+  ],
+  "Upgrade": [
+    "更新",
+    "Update",
+    "Aktualisieren",
+    "Mettre à jour",
+    "업데이트",
+    "更新",
+    "更新"
+  ],
+  "Installed": [
+    "導入済み",
+    "Installed",
+    "Installiert",
+    "Installé",
+    "설치됨",
+    "已安装",
+    "已安裝"
+  ],
+  "Empty": [
+    "公開中のプラグインはありません。",
+    "No published plugins.",
+    "Keine veröffentlichten Plugins.",
+    "Aucun plugin publié.",
+    "공개된 플러그인이 없습니다.",
+    "没有已发布的插件。",
+    "沒有已發布的外掛。"
+  ],
+  "LangHelp": [
+    "一覧と操作画面の表示言語を選択します。",
+    "Choose the portal display language.",
+    "Anzeigesprache des Portals auswählen.",
+    "Choisissez la langue du portail.",
+    "포털 표시 언어를 선택하세요.",
+    "选择门户显示语言。",
+    "選擇入口網站的顯示語言。"
+  ],
+  "Repo": [
+    "Dalamudのカスタムリポジトリに登録するURL",
+    "Custom repository URL for Dalamud",
+    "URL für das benutzerdefinierte Dalamud-Repository",
+    "URL du dépôt personnalisé pour Dalamud",
+    "Dalamud 사용자 저장소 URL",
+    "Dalamud自定义仓库地址",
+    "Dalamud自訂儲存庫網址"
+  ],
+  "Copy": [
+    "URLをコピー",
+    "Copy URL",
+    "URL kopieren",
+    "Copier l’URL",
+    "URL 복사",
+    "复制地址",
+    "複製網址"
+  ]
+}
