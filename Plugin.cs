@@ -11,6 +11,8 @@ namespace RoxyzsPortal;
 
 public sealed class Plugin : IDalamudPlugin
 {
+    private static readonly PluginDependency[] Dependencies = [];
+    private readonly StandardPluginInfo info = new(Dependencies);
     private readonly IDalamudPluginInterface pi;
     private readonly ICommandManager commands;
     private readonly IClientState client;
@@ -136,9 +138,11 @@ public sealed class Plugin : IDalamudPlugin
                 DrawCatalog();
                 ImGui.EndTabItem();
             }
+            var code = settings.Value.Language ?? "en";
             StandardPluginTabs.DrawStandardTrailingTabs(T("Settings"), "Settings", DrawSettings,
                 T("Language"), DrawLanguage, T("Support"), () => StandardPluginTabs.DrawSupportContent(
-                T("SupportHeading"), T("SupportBody"), T("Recipient"), T("SupportButton")));
+                T("SupportHeading"), T("SupportBody"), T("Recipient"), T("SupportButton")),
+                StandardPluginInfo.Title(code), Dependencies.Length == 0 ? null : () => info.Draw(pi, code));
             ImGui.EndTabBar();
         }
         ImGui.End();
